@@ -7,78 +7,115 @@
   <title>Raagasree Staff Attendance</title>
   <style>
     * { box-sizing: border-box; }
+
     body {
       margin: 0;
-      padding: 20px 12px;
-      background: #f0f4fa;
-      color: #183153;
+      padding: 24px 12px;
+      background: #f3f6fa;
+      color: #172b45;
       font-family: Arial, sans-serif;
     }
+
     .card {
       max-width: 440px;
       margin: 0 auto;
-      padding: 24px;
-      background: white;
-      border-radius: 18px;
-      box-shadow: 0 5px 24px rgba(20, 45, 80, .12);
+      padding: 26px 24px;
+      background: #fff;
+      border: 1px solid #e0e6ee;
+      border-radius: 12px;
+      box-shadow: 0 8px 28px rgba(22, 43, 69, .08);
     }
-    h1 {
+
+    .school-header {
+      text-align: center;
+      padding: 4px 0 20px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #c8a34d;
+    }
+
+    .school-name {
       margin: 0;
+      color: #15365b;
+      font-size: clamp(30px, 8vw, 38px);
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      line-height: 1.15;
       text-align: center;
-      font-size: 24px;
-      color: #173e70;
     }
+
+    .school-location {
+      margin: 7px 0 0;
+      color: #263b54;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.4;
+      text-align: center;
+      white-space: nowrap;
+    }
+
     .subtitle {
+      margin: 12px 0 0;
+      color: #68778b;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
       text-align: center;
-      margin: 8px 0 22px;
-      color: #64748b;
-      font-size: 14px;
+      text-transform: uppercase;
     }
+
     label {
       display: block;
       margin: 15px 0 6px;
       font-weight: bold;
       font-size: 14px;
     }
+
     input {
       width: 100%;
       padding: 13px;
       border: 1px solid #cbd5e1;
-      border-radius: 9px;
+      border-radius: 8px;
       font-size: 16px;
     }
+
     button {
       width: 100%;
       padding: 14px;
       margin-top: 12px;
       border: 0;
-      border-radius: 9px;
+      border-radius: 8px;
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
     }
+
     button:disabled { opacity: .6; cursor: wait; }
     .capture { background: #e9eff8; color: #173e70; }
     .in { background: #167447; color: white; }
     .out { background: #173e70; color: white; }
+
     #cameraArea { margin-top: 16px; display: none; }
+
     video, #preview {
       width: 100%;
       max-height: 300px;
       object-fit: cover;
-      border-radius: 12px;
+      border-radius: 10px;
       background: #111827;
     }
+
     #preview { display: none; }
+
     #message {
       margin-top: 16px;
       padding: 12px;
-      border-radius: 9px;
+      border-radius: 8px;
       background: #f1f5f9;
       font-size: 14px;
       line-height: 1.5;
       overflow-wrap: anywhere;
     }
+
     .small {
       margin-top: 16px;
       color: #64748b;
@@ -90,8 +127,11 @@
 </head>
 <body>
   <main class="card">
-    <h1>Raagasree E.M High School</h1>
-    <p class="subtitle">Staff Attendance · 2026–27</p>
+    <header class="school-header">
+      <h1 class="school-name">RAAGASREE</h1>
+      <p class="school-location">E.M HIGH SCHOOL, V. KOTA</p>
+      <p class="subtitle">Staff Attendance · 2026–27</p>
+    </header>
 
     <form id="attendanceForm"
           action="https://script.google.com/macros/s/AKfycbxOCdt1KMDUa0GwAY3VdnkC9tnNa8akXSsTqkh9TM5_rHFb-5g5Vdg71_LTlTZYno28ww/exec"
@@ -168,7 +208,6 @@
 
     async function startAttendance(action) {
       if (submitting) return;
-
       if (!form.reportValidity()) return;
 
       pendingAction = action;
@@ -283,9 +322,6 @@
       submitting = true;
       document.getElementById("action").value = pendingAction;
       showMessage("Submitting attendance. Please wait…");
-
-      // Submit directly to the Apps Script web app.
-      // The Apps Script response will display the attendance result.
       form.submit();
     }
 
