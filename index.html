@@ -20,35 +20,46 @@
     }
 
     .card {
+      width: 100%;
       max-width: 420px;
       margin: 25px auto;
       padding: 28px 24px;
-      background: white;
+      background: #ffffff;
       border-radius: 16px;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
       border-top: 5px solid #c59a43;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
     }
 
     h1 {
+      display: block;
+      width: 100%;
       text-align: center;
       font-size: 29px;
       margin: 0 0 4px;
+      padding: 0;
       color: #183153;
       letter-spacing: 1px;
     }
 
     .school-name {
+      display: block;
+      width: 100%;
       text-align: center;
       font-size: 21px;
-      margin: 0 0 14px;
+      font-weight: bold;
+      margin: 0 auto 14px;
+      padding: 0;
       color: #183153;
       letter-spacing: 0.5px;
     }
 
     .subtitle {
+      display: block;
+      width: 100%;
       text-align: center;
       font-size: 16px;
       margin: 0 0 28px;
+      padding: 0;
       color: #a57922;
       font-weight: bold;
       letter-spacing: 0.5px;
@@ -62,20 +73,23 @@
 
     input[type="text"],
     input[type="password"] {
+      display: block;
       width: 100%;
       padding: 13px;
       border: 1px solid #cbd5e1;
       border-radius: 8px;
       font-size: 16px;
+      background: #ffffff;
     }
 
     button {
+      display: block;
       width: 100%;
       padding: 15px;
       margin-top: 18px;
       border: none;
       border-radius: 8px;
-      color: white;
+      color: #ffffff;
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
@@ -120,6 +134,7 @@
 
 <body>
   <main class="card">
+
     <h1>RAAGASREE</h1>
     <h2 class="school-name">E.M HIGH SCHOOL</h2>
     <p class="subtitle">STAFF ATTENDANCE 2026–27</p>
@@ -157,7 +172,7 @@
       <button
         type="button"
         class="in-button"
-        onclick="submitAttendance('IN', this)"
+        onclick="submitAttendance('IN')"
       >
         IN-PUNCH
       </button>
@@ -165,7 +180,7 @@
       <button
         type="button"
         class="out-button"
-        onclick="submitAttendance('OUT', this)"
+        onclick="submitAttendance('OUT')"
       >
         OUT-PUNCH
       </button>
@@ -179,12 +194,13 @@
     </p>
 
     <p class="footer">Excellence in Every Step</p>
+
   </main>
 
   <script>
     let submitting = false;
 
-    function submitAttendance(action, button) {
+    function submitAttendance(action) {
       if (submitting) return;
 
       const form = document.getElementById("attendanceForm");
@@ -201,10 +217,9 @@
       submitting = true;
 
       const buttons = form.querySelectorAll("button");
-      buttons.forEach(b => b.disabled = true);
+      buttons.forEach(button => button.disabled = true);
 
-      message.textContent =
-        "Checking your location. Please wait...";
+      message.textContent = "Checking your location. Please wait...";
 
       navigator.geolocation.getCurrentPosition(
         function(position) {
@@ -217,12 +232,11 @@
             position.coords.accuracy;
 
           message.textContent = "Submitting attendance...";
-
           form.submit();
         },
         function(error) {
           submitting = false;
-          buttons.forEach(b => b.disabled = false);
+          buttons.forEach(button => button.disabled = false);
 
           if (error.code === 1) {
             message.textContent =
