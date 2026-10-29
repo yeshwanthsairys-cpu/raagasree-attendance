@@ -4,335 +4,158 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Raagasree E.M High School - Staff Attendance</title>
-
+  <title>Raagasree Staff Attendance</title>
   <style>
     * { box-sizing: border-box; }
-
     body {
       margin: 0;
-      padding: 20px;
-      font-family: Arial, sans-serif;
+      padding: 20px 12px;
       background: #f0f4fa;
       color: #183153;
+      font-family: Arial, sans-serif;
     }
-
     .card {
-      width: 100%;
-      max-width: 420px;
-      margin: 25px auto;
-      padding: 28px 24px;
-      background: #fff;
-      border-radius: 16px;
-      border-top: 5px solid #c59a43;
-      box-shadow: 0 4px 18px rgba(0,0,0,.08);
+      max-width: 440px;
+      margin: 0 auto;
+      padding: 24px;
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 5px 24px rgba(20, 45, 80, .12);
     }
-
     h1 {
-      display: block;
-      width: 100%;
+      margin: 0;
       text-align: center;
-      font-size: 29px;
-      margin: 0 0 4px;
-      color: #183153;
-      letter-spacing: 1px;
+      font-size: 24px;
+      color: #173e70;
     }
-
-    .school-name {
-      display: block;
-      width: 100%;
-      text-align: center;
-      font-size: 21px;
-      font-weight: bold;
-      margin: 0 auto 14px;
-      color: #183153;
-      letter-spacing: .5px;
-    }
-
     .subtitle {
-      display: block;
-      width: 100%;
       text-align: center;
-      font-size: 16px;
-      margin: 0 0 28px;
-      color: #a57922;
-      font-weight: bold;
-      letter-spacing: .5px;
+      margin: 8px 0 22px;
+      color: #64748b;
+      font-size: 14px;
     }
-
     label {
       display: block;
-      margin: 15px 0 7px;
+      margin: 15px 0 6px;
       font-weight: bold;
+      font-size: 14px;
     }
-
-    input[type="text"],
-    input[type="password"] {
-      display: block;
+    input {
       width: 100%;
       padding: 13px;
       border: 1px solid #cbd5e1;
-      border-radius: 8px;
+      border-radius: 9px;
       font-size: 16px;
-      background: #fff;
     }
-
     button {
-      display: block;
       width: 100%;
-      padding: 15px;
-      margin-top: 18px;
-      border: none;
-      border-radius: 8px;
-      color: #fff;
+      padding: 14px;
+      margin-top: 12px;
+      border: 0;
+      border-radius: 9px;
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
     }
-
-    .in-button { background: #16834a; }
-    .out-button { background: #2458b8; }
-    .capture-button { background: #a57922; }
-    .cancel-button { background: #64748b; }
-
-    button:disabled {
-      opacity: .6;
-      cursor: wait;
-    }
-
-    #cameraPanel {
-      display: none;
-      margin-top: 20px;
-      text-align: center;
-    }
-
-    #video, #preview {
+    button:disabled { opacity: .6; cursor: wait; }
+    .capture { background: #e9eff8; color: #173e70; }
+    .in { background: #167447; color: white; }
+    .out { background: #173e70; color: white; }
+    #cameraArea { margin-top: 16px; display: none; }
+    video, #preview {
       width: 100%;
-      max-height: 320px;
+      max-height: 300px;
       object-fit: cover;
-      border-radius: 10px;
-      background: #172033;
+      border-radius: 12px;
+      background: #111827;
     }
-
     #preview { display: none; }
-
-    .camera-note {
-      font-size: 13px;
-      color: #596579;
-      line-height: 1.5;
-    }
-
     #message {
-      margin-top: 20px;
-      text-align: center;
-      line-height: 1.6;
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 9px;
+      background: #f1f5f9;
+      font-size: 14px;
+      line-height: 1.5;
       overflow-wrap: anywhere;
     }
-
-    .note {
-      font-size: 13px;
-      color: #596579;
-      text-align: center;
-      margin-top: 22px;
+    .small {
+      margin-top: 16px;
+      color: #64748b;
+      font-size: 12px;
       line-height: 1.5;
+      text-align: center;
     }
   </style>
 </head>
-
 <body>
   <main class="card">
-    <h1>RAAGASREE</h1>
-    <h2 class="school-name">E.M HIGH SCHOOL</h2>
-    <p class="subtitle">STAFF ATTENDANCE 2026–27</p>
+    <h1>Raagasree E.M High School</h1>
+    <p class="subtitle">Staff Attendance · 2026–27</p>
 
-    <form
-      id="attendanceForm"
-      action="https://script.google.com/macros/s/AKfycbxOCdt1KMDUa0GwAY3VdnkC9tnNa8akXSsTqkh9TM5_rHFb-5g5Vdg71_LTlTZYno28ww/exec"
-      method="POST"
-      onsubmit="return false;"
-    >
+    <form id="attendanceForm"
+          action="https://script.google.com/macros/s/AKfycbxOCdt1KMDUa0GwAY3VdnkC9tnNa8akXSsTqkh9TM5_rHFb-5g5Vdg71_LTlTZYno28ww/exec"
+          method="POST"
+          target="_self">
+
       <label for="teacherId">Teacher ID</label>
-      <input
-        id="teacherId"
-        name="teacherId"
-        type="text"
-        placeholder="Enter your Teacher ID"
-        required
-        autocomplete="username"
-      >
+      <input id="teacherId" name="teacherId" required autocomplete="username">
 
       <label for="pin">Attendance PIN</label>
-      <input
-        id="pin"
-        name="pin"
-        type="password"
-        placeholder="Enter your Attendance PIN"
-        required
-        autocomplete="current-password"
-      >
+      <input id="pin" name="pin" type="password" required
+             inputmode="numeric" autocomplete="current-password">
 
-      <input type="hidden" name="action" id="action">
-      <input type="hidden" name="latitude" id="latitude">
-      <input type="hidden" name="longitude" id="longitude">
-      <input type="hidden" name="accuracy" id="accuracy">
-      <input type="hidden" name="selfie" id="selfie">
+      <input type="hidden" id="action" name="action" value="">
+      <input type="hidden" id="latitude" name="latitude">
+      <input type="hidden" id="longitude" name="longitude">
+      <input type="hidden" id="accuracy" name="accuracy">
+      <input type="hidden" id="selfie" name="selfie">
 
-      <div id="punchButtons">
-        <button type="button" class="in-button"
-          onclick="beginAttendance('IN')">
-          IN-PUNCH
-        </button>
-
-        <button type="button" class="out-button"
-          onclick="beginAttendance('OUT')">
-          OUT-PUNCH
-        </button>
+      <div id="cameraArea">
+        <video id="video" autoplay playsinline muted></video>
+        <canvas id="canvas" hidden></canvas>
+        <img id="preview" alt="Captured attendance selfie">
+        <button type="button" class="capture" id="captureButton"
+                onclick="captureSelfie()">Capture Selfie</button>
+        <button type="button" class="capture" id="retakeButton"
+                onclick="retakeSelfie()" hidden>Retake Selfie</button>
       </div>
 
-      <section id="cameraPanel">
-        <p id="cameraHeading"><b>Take your attendance selfie</b></p>
-        <video id="video" autoplay playsinline muted></video>
-        <img id="preview" alt="Captured attendance selfie">
-        <canvas id="canvas" style="display:none"></canvas>
-
-        <p class="camera-note">
-          Make sure your face is clearly visible. Your selfie will be
-          submitted with your attendance.
-        </p>
-
-        <button type="button" id="captureButton"
-          class="capture-button" onclick="captureSelfie()">
-          Capture Selfie
-        </button>
-
-        <button type="button" id="retakeButton"
-          class="capture-button" style="display:none"
-          onclick="retakeSelfie()">
-          Retake Selfie
-        </button>
-
-        <button type="button" class="cancel-button"
-          onclick="cancelAttendance()">
-          Cancel
-        </button>
-      </section>
+      <button type="button" class="in" id="inButton"
+              onclick="startAttendance('IN')">Punch IN</button>
+      <button type="button" class="out" id="outButton"
+              onclick="startAttendance('OUT')">Punch OUT</button>
     </form>
 
-    <div id="message" role="status" aria-live="polite"></div>
+    <div id="message" role="status" aria-live="polite">
+      Enter your Teacher ID and PIN, then select Punch IN or Punch OUT.
+    </div>
 
-    <p class="note">
-      Allow camera and location access. Mark attendance while at school.
+    <p class="small">
+      Enable your phone's camera and location permissions.
+      Attendance is accepted only within the permitted school area.
     </p>
   </main>
 
   <script>
-    let pendingAction = "";
-    let cameraStream = null;
-    let submitting = false;
-
     const form = document.getElementById("attendanceForm");
-    const message = document.getElementById("message");
     const video = document.getElementById("video");
+    const canvas = document.getElementById("canvas");
     const preview = document.getElementById("preview");
-    const cameraPanel = document.getElementById("cameraPanel");
+    const selfieInput = document.getElementById("selfie");
+    const message = document.getElementById("message");
+    const cameraArea = document.getElementById("cameraArea");
     const captureButton = document.getElementById("captureButton");
     const retakeButton = document.getElementById("retakeButton");
+    const inButton = document.getElementById("inButton");
+    const outButton = document.getElementById("outButton");
 
-    function setMessage(text) {
+    let cameraStream = null;
+    let pendingAction = "";
+    let submitting = false;
+
+    function showMessage(text) {
       message.textContent = text;
-    }
-
-    async function beginAttendance(action) {
-      if (submitting) return;
-      if (!form.reportValidity()) return;
-
-      if (!navigator.mediaDevices ||
-          !navigator.mediaDevices.getUserMedia) {
-        setMessage(
-          "Camera access is unavailable. Open the website using HTTPS in a supported browser."
-        );
-        return;
-      }
-
-      pendingAction = action;
-      document.getElementById("action").value = action;
-      document.getElementById("selfie").value = "";
-
-      document.getElementById("punchButtons").style.display = "none";
-      cameraPanel.style.display = "block";
-      video.style.display = "block";
-      preview.style.display = "none";
-      captureButton.style.display = "block";
-      retakeButton.style.display = "none";
-
-      document.getElementById("cameraHeading").textContent =
-        action === "IN"
-          ? "IN-PUNCH: Take your selfie"
-          : "OUT-PUNCH: Take your selfie";
-
-      setMessage("Opening camera. Please allow camera access...");
-
-      try {
-        cameraStream = await navigator.mediaDevices.getUserMedia({
-          video: {
-            facingMode: "user",
-            width: { ideal: 640 },
-            height: { ideal: 480 }
-          },
-          audio: false
-        });
-
-        video.srcObject = cameraStream;
-        await video.play();
-        setMessage("Position your face and capture your selfie.");
-      } catch (error) {
-        stopCamera();
-        cameraPanel.style.display = "none";
-        document.getElementById("punchButtons").style.display = "block";
-        setMessage(
-          "Unable to open the camera. Allow camera permission in your browser and try again."
-        );
-      }
-    }
-
-    function captureSelfie() {
-      if (!video.videoWidth || !video.videoHeight) {
-        setMessage("Camera is not ready. Please wait and try again.");
-        return;
-      }
-
-      const canvas = document.getElementById("canvas");
-      const maxWidth = 480;
-      const scale = Math.min(1, maxWidth / video.videoWidth);
-
-      canvas.width = Math.round(video.videoWidth * scale);
-      canvas.height = Math.round(video.videoHeight * scale);
-
-      const context = canvas.getContext("2d");
-      context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-      const selfieData = canvas.toDataURL("image/jpeg", 0.6);
-
-      if (selfieData.length > 1500000) {
-        setMessage("Photo is too large. Please retake the selfie.");
-        return;
-      }
-
-      document.getElementById("selfie").value = selfieData;
-      preview.src = selfieData;
-      preview.style.display = "block";
-      video.style.display = "none";
-      captureButton.style.display = "none";
-      retakeButton.style.display = "block";
-
-      stopCamera();
-      submitWithLocation();
-    }
-
-    function retakeSelfie() {
-      document.getElementById("selfie").value = "";
-      preview.style.display = "none";
-      beginAttendance(pendingAction);
     }
 
     function stopCamera() {
@@ -343,68 +166,136 @@
       video.srcObject = null;
     }
 
-    function cancelAttendance() {
-      stopCamera();
-      submitting = false;
-      pendingAction = "";
-      cameraPanel.style.display = "none";
-      document.getElementById("punchButtons").style.display = "block";
-      document.getElementById("selfie").value = "";
-      setMessage("Attendance cancelled.");
+    async function startAttendance(action) {
+      if (submitting) return;
+
+      if (!form.reportValidity()) return;
+
+      pendingAction = action;
+      selfieInput.value = "";
+      preview.style.display = "none";
+      video.style.display = "block";
+      captureButton.hidden = false;
+      retakeButton.hidden = true;
+      cameraArea.style.display = "block";
+      inButton.disabled = true;
+      outButton.disabled = true;
+
+      showMessage("Opening camera. Please allow camera access.");
+
+      try {
+        stopCamera();
+        cameraStream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: "user",
+            width: { ideal: 640 },
+            height: { ideal: 480 }
+          },
+          audio: false
+        });
+        video.srcObject = cameraStream;
+        await video.play();
+        showMessage("Camera ready. Capture your selfie.");
+      } catch (err) {
+        showMessage("Camera could not open. Allow camera permission and try again.");
+        inButton.disabled = false;
+        outButton.disabled = false;
+      }
     }
 
-    function submitWithLocation() {
-      if (!navigator.geolocation) {
-        setMessage("Your browser does not support GPS location.");
-        captureButton.style.display = "block";
-        retakeButton.style.display = "block";
+    function captureSelfie() {
+      if (!video.videoWidth || !video.videoHeight) {
+        showMessage("Camera is not ready yet. Please wait a moment.");
         return;
       }
 
-      submitting = true;
-      captureButton.disabled = true;
-      retakeButton.disabled = true;
+      const scale = Math.min(1, 480 / video.videoWidth);
+      canvas.width = Math.round(video.videoWidth * scale);
+      canvas.height = Math.round(video.videoHeight * scale);
 
-      setMessage("Selfie captured. Checking your GPS location...");
+      const context = canvas.getContext("2d");
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      selfieInput.value = canvas.toDataURL("image/jpeg", 0.6);
+      preview.src = selfieInput.value;
+      preview.style.display = "block";
+      video.style.display = "none";
+      captureButton.hidden = true;
+      retakeButton.hidden = false;
+
+      stopCamera();
+      showMessage("Selfie captured. Getting your GPS location…");
+      getLocationAndSubmit();
+    }
+
+    function retakeSelfie() {
+      selfieInput.value = "";
+      startAttendance(pendingAction);
+    }
+
+    function getLocationAndSubmit() {
+      if (!navigator.geolocation) {
+        showMessage("This browser does not support GPS location.");
+        inButton.disabled = false;
+        outButton.disabled = false;
+        return;
+      }
 
       navigator.geolocation.getCurrentPosition(
-        function(position) {
+        position => {
           document.getElementById("latitude").value =
             position.coords.latitude;
           document.getElementById("longitude").value =
             position.coords.longitude;
           document.getElementById("accuracy").value =
             position.coords.accuracy;
-
-          setMessage("Submitting attendance and selfie...");
-
-          // Submit the captured selfie and GPS with the attendance form.
-          form.submit();
+          submitAttendance();
         },
-        function(error) {
-          submitting = false;
-          captureButton.disabled = false;
-          retakeButton.disabled = false;
-
-          if (error.code === 1) {
-            setMessage(
-              "Location permission denied. Allow location access and try again."
-            );
-          } else if (error.code === 3) {
-            setMessage("Location request timed out. Please try again.");
-          } else {
-            setMessage("Unable to get your location. Turn on GPS and try again.");
-          }
+        error => {
+          const reasons = {
+            1: "Location permission was denied.",
+            2: "Your location could not be determined.",
+            3: "Getting your location timed out."
+          };
+          showMessage((reasons[error.code] || "GPS failed.") +
+                      " Enable location and retry.");
+          inButton.disabled = false;
+          outButton.disabled = false;
         },
         {
           enableHighAccuracy: true,
-          timeout: 20000,
+          timeout: 30000,
           maximumAge: 0
         }
       );
     }
 
-    window.addEventListener("pagehide", stopCamera);
+    function submitAttendance() {
+      if (submitting) return;
+
+      if (!selfieInput.value) {
+        showMessage("Please capture your selfie first.");
+        inButton.disabled = false;
+        outButton.disabled = false;
+        return;
+      }
+
+      submitting = true;
+      document.getElementById("action").value = pendingAction;
+      showMessage("Submitting attendance. Please wait…");
+
+      // Submit directly to the Apps Script web app.
+      // The Apps Script response will display the attendance result.
+      form.submit();
+    }
+
+    window.addEventListener("pageshow", () => {
+      submitting = false;
+      inButton.disabled = false;
+      outButton.disabled = false;
+    });
+
+    window.addEventListener("beforeunload", stopCamera);
   </script>
 </body>
 </html>
