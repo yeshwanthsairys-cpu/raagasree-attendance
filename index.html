@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,9 +6,7 @@
   <title>Raagasree Staff Attendance</title>
 
   <style>
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -17,185 +14,198 @@
       font-family: Arial, sans-serif;
       background: #f0f4fa;
       color: #183153;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
     .card {
+      max-width: 420px;
+      margin: 25px auto;
+      padding: 25px;
       background: white;
-      padding: 28px 22px;
       border-radius: 16px;
-      width: 100%;
-      max-width: 410px;
-      box-shadow: 0 4px 22px #00000012;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
     }
 
     h1 {
       text-align: center;
-      color: #123d70;
-      font-size: 23px;
+      font-size: 25px;
+      margin-bottom: 8px;
     }
 
     .subtitle {
       text-align: center;
       margin-bottom: 25px;
+      color: #596579;
     }
 
     label {
       display: block;
-      margin: 16px 0 7px;
+      margin: 15px 0 7px;
       font-weight: bold;
     }
 
     input {
       width: 100%;
       padding: 13px;
-      border: 1px solid #ccd5e0;
+      border: 1px solid #cbd5e1;
       border-radius: 8px;
       font-size: 16px;
     }
 
     button {
       width: 100%;
-      padding: 14px;
-      margin-top: 22px;
-      background: #123d70;
-      color: white;
-      border: 0;
+      padding: 15px;
+      margin-top: 18px;
+      border: none;
       border-radius: 8px;
+      color: white;
       font-size: 16px;
       font-weight: bold;
       cursor: pointer;
     }
+
+    .in-button { background: #16834a; }
+    .out-button { background: #2458b8; }
 
     button:disabled {
       opacity: 0.6;
       cursor: wait;
     }
 
-    #status {
+    #message {
+      margin-top: 20px;
       text-align: center;
-      margin-top: 16px;
-      line-height: 1.5;
+      line-height: 1.6;
+      overflow-wrap: anywhere;
     }
 
     .note {
-      font-size: 12px;
+      font-size: 13px;
       color: #596579;
       text-align: center;
-      margin-top: 18px;
+      margin-top: 20px;
     }
   </style>
 </head>
 
 <body>
   <main class="card">
-    <h1>RAAGASREE E.M HIGH SCHOOL</h1>
-    <p class="subtitle">Staff Attendance System</p>
+    <h1>RAAGASREE</h1>
+    <p class="subtitle">E.M High School<br>Staff Attendance 2026–27</p>
 
     <form
       id="attendanceForm"
       action="https://script.google.com/macros/s/AKfycbxOCdt1KMDUa0GwAY3VdnkC9tnNa8akXSsTqkh9TM5_rHFb-5g5Vdg71_LTlTZYno28ww/exec"
-      method="post">
-
+      method="POST"
+    >
       <label for="teacherId">Teacher ID</label>
       <input
         id="teacherId"
         name="teacherId"
         type="text"
+        placeholder="Enter your Teacher ID"
         required
         autocomplete="username"
-        placeholder="Enter your Teacher ID">
+      >
 
       <label for="pin">Attendance PIN</label>
       <input
         id="pin"
         name="pin"
         type="password"
+        placeholder="Enter your PIN"
         required
         autocomplete="current-password"
-        placeholder="Enter your PIN">
+      >
 
+      <input type="hidden" name="action" id="action">
       <input type="hidden" name="latitude" id="latitude">
       <input type="hidden" name="longitude" id="longitude">
       <input type="hidden" name="accuracy" id="accuracy">
 
-      <button id="submitButton" type="submit">
-        Verify Location &amp; Check In
+      <button
+        type="button"
+        class="in-button"
+        onclick="submitAttendance('IN', this)"
+      >
+        IN-PUNCH
       </button>
 
-      <p id="status" role="status" aria-live="polite"></p>
+      <button
+        type="button"
+        class="out-button"
+        onclick="submitAttendance('OUT', this)"
+      >
+        OUT-PUNCH
+      </button>
     </form>
 
+    <div id="message" role="status" aria-live="polite"></div>
+
     <p class="note">
-      Allow location access when prompted. Your attendance will be
-      recorded only if the server accepts your teacher details and location.
+      Please allow location access and complete your attendance
+      while at school.
     </p>
   </main>
 
   <script>
-    const form = document.getElementById("attendanceForm");
-    const button = document.getElementById("submitButton");
-    const status = document.getElementById("status");
     let submitting = false;
 
-    form.addEventListener("submit", function(event) {
-      event.preventDefault();
+    function submitAttendance(action, button) {
+      if (submitting) return;
 
-      if (submitting || !form.reportValidity()) {
-        return;
-      }
+      const form = document.getElementById("attendanceForm");
+      const message = document.getElementById("message");
+
+      if (!form.reportValidity()) return;
 
       if (!navigator.geolocation) {
-        status.textContent =
-          "Your browser does not support GPS location.";
+        message.textContent = "Your browser does not support GPS location.";
         return;
       }
 
       submitting = true;
-      button.disabled = true;
-      status.textContent = "Getting your location. Please wait...";
+
+      const buttons = form.querySelectorAll("button");
+      buttons.forEach(b => b.disabled = true);
+
+      message.textContent = "Checking your location. Please wait...";
 
       navigator.geolocation.getCurrentPosition(
         function(position) {
+          document.getElementById("action").value = action;
           document.getElementById("latitude").value =
             position.coords.latitude;
-
           document.getElementById("longitude").value =
             position.coords.longitude;
-
           document.getElementById("accuracy").value =
             position.coords.accuracy;
 
-          status.textContent = "Submitting attendance...";
+          message.textContent = "Submitting attendance...";
+
           form.submit();
         },
-
         function(error) {
           submitting = false;
-          button.disabled = false;
+          buttons.forEach(b => b.disabled = false);
 
           if (error.code === 1) {
-            status.textContent =
-              "Location permission denied. Allow location access in your browser settings.";
+            message.textContent =
+              "Location permission denied. Allow location access in your browser and try again.";
           } else if (error.code === 3) {
-            status.textContent =
-              "Location request timed out. Enable GPS and try again.";
+            message.textContent =
+              "Location request timed out. Please try again.";
           } else {
-            status.textContent =
-              "Unable to get your location. Enable GPS and try again.";
+            message.textContent =
+              "Unable to get your location. Turn on GPS and try again.";
           }
         },
-
         {
           enableHighAccuracy: true,
           timeout: 20000,
           maximumAge: 0
         }
       );
-    });
+    }
   </script>
 </body>
 </html>
