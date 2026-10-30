@@ -4,146 +4,244 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Raagasree Staff Attendance</title>
+  <meta name="theme-color" content="#102b4e">
+  <title>Raagasree | Staff Attendance</title>
+
   <style>
     * { box-sizing: border-box; }
 
     body {
       margin: 0;
-      padding: 24px 12px;
-      background: #f3f6fa;
+      min-height: 100vh;
+      padding: 30px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(145deg, #0b1e36, #173d65);
       color: #172b45;
       font-family: Arial, sans-serif;
     }
 
     .card {
-      max-width: 440px;
-      margin: 0 auto;
-      padding: 26px 24px;
+      width: 100%;
+      max-width: 460px;
+      padding: 30px 26px 24px;
       background: #fff;
-      border: 1px solid #e0e6ee;
-      border-radius: 12px;
-      box-shadow: 0 8px 28px rgba(22, 43, 69, .08);
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.5);
+      box-shadow: 0 20px 55px rgba(0,0,0,.25);
     }
 
     .school-header {
       text-align: center;
-      padding: 4px 0 20px;
-      margin-bottom: 20px;
+      padding: 8px 0 22px;
+      margin-bottom: 22px;
       border-bottom: 2px solid #c8a34d;
+    }
+
+    .tagline {
+      margin: 0 0 12px;
+      color: #b18b38;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
     }
 
     .school-name {
       margin: 0;
-      color: #15365b;
-      font-size: clamp(30px, 8vw, 38px);
-      font-weight: 800;
+      color: #12365c;
+      font-size: clamp(34px, 9vw, 43px);
+      font-weight: 900;
       letter-spacing: 1.5px;
-      line-height: 1.15;
-      text-align: center;
+      line-height: 1.1;
     }
 
     .school-location {
-      margin: 7px 0 0;
-      color: #263b54;
+      margin: 8px 0 0;
+      color: #243e5b;
       font-size: 16px;
-      font-weight: 700;
-      line-height: 1.4;
-      text-align: center;
-      white-space: nowrap;
+      font-weight: 800;
+      letter-spacing: .5px;
     }
 
     .subtitle {
-      margin: 12px 0 0;
-      color: #68778b;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 1.2px;
-      text-align: center;
+      display: inline-block;
+      margin: 15px 0 0;
+      padding: 8px 15px;
+      border-radius: 30px;
+      background: #edf2f8;
+      color: #173e68;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
       text-transform: uppercase;
+    }
+
+    .section-title {
+      margin: 0 0 5px;
+      color: #15365b;
+      font-size: 19px;
+      font-weight: 800;
+    }
+
+    .section-description {
+      margin: 0 0 20px;
+      color: #718096;
+      font-size: 13px;
+      line-height: 1.5;
     }
 
     label {
       display: block;
-      margin: 15px 0 6px;
-      font-weight: bold;
-      font-size: 14px;
+      margin: 16px 0 7px;
+      color: #243b55;
+      font-size: 13px;
+      font-weight: 700;
     }
 
     input {
       width: 100%;
-      padding: 13px;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
+      padding: 14px;
+      border: 1px solid #d5deea;
+      border-radius: 9px;
+      background: #fbfcfe;
+      color: #172b45;
       font-size: 16px;
+      outline: none;
+      transition: border .2s, box-shadow .2s;
+    }
+
+    input:focus {
+      border-color: #b18b38;
+      box-shadow: 0 0 0 3px rgba(200,163,77,.15);
     }
 
     button {
       width: 100%;
-      padding: 14px;
+      padding: 15px;
       margin-top: 12px;
       border: 0;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: bold;
+      border-radius: 9px;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: .3px;
       cursor: pointer;
+      transition: opacity .2s, transform .2s;
     }
 
-    button:disabled { opacity: .6; cursor: wait; }
-    .capture { background: #e9eff8; color: #173e70; }
-    .in { background: #167447; color: white; }
-    .out { background: #173e70; color: white; }
+    button:active { transform: scale(.99); }
+    button:disabled { opacity: .55; cursor: wait; }
 
-    #cameraArea { margin-top: 16px; display: none; }
+    .in {
+      background: #176c49;
+      color: white;
+    }
+
+    .out {
+      background: #173e70;
+      color: white;
+    }
+
+    .capture {
+      background: #edf2f8;
+      color: #173e70;
+      border: 1px solid #d8e1ed;
+    }
+
+    #cameraArea {
+      margin-top: 20px;
+      padding: 12px;
+      background: #f5f7fa;
+      border: 1px solid #e1e7ef;
+      border-radius: 12px;
+      display: none;
+    }
 
     video, #preview {
+      display: block;
       width: 100%;
       max-height: 300px;
       object-fit: cover;
-      border-radius: 10px;
+      border-radius: 9px;
       background: #111827;
     }
 
     #preview { display: none; }
 
     #message {
-      margin-top: 16px;
-      padding: 12px;
-      border-radius: 8px;
-      background: #f1f5f9;
-      font-size: 14px;
-      line-height: 1.5;
+      margin-top: 18px;
+      padding: 13px;
+      border-radius: 9px;
+      background: #f0f4f9;
+      border-left: 4px solid #c8a34d;
+      color: #344b65;
+      font-size: 13px;
+      line-height: 1.6;
       overflow-wrap: anywhere;
     }
 
-    .small {
-      margin-top: 16px;
-      color: #64748b;
+    .security-note {
+      display: flex;
+      gap: 9px;
+      align-items: flex-start;
+      margin-top: 20px;
+      padding: 12px;
+      background: #fffaf0;
+      border: 1px solid #f0e4c5;
+      border-radius: 9px;
+      color: #79612c;
       font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .footer {
+      margin: 20px 0 0;
+      padding-top: 15px;
+      border-top: 1px solid #e7ebf1;
+      color: #8a96a6;
+      font-size: 11px;
       line-height: 1.5;
       text-align: center;
     }
+
+    @media (max-width: 380px) {
+      .card { padding: 24px 18px; }
+      .school-location { font-size: 14px; }
+    }
   </style>
 </head>
+
 <body>
   <main class="card">
+
     <header class="school-header">
+      <p class="tagline">Excellence in Every Step</p>
       <h1 class="school-name">RAAGASREE</h1>
       <p class="school-location">E.M HIGH SCHOOL, V. KOTA</p>
       <p class="subtitle">Staff Attendance · 2026–27</p>
     </header>
 
+    <h2 class="section-title">Staff Attendance</h2>
+    <p class="section-description">
+      Enter your staff credentials and select your attendance punch.
+    </p>
+
     <form id="attendanceForm"
-          action="https://script.google.com/macros/s/AKfycbxOCdt1KMDUa0GwAY3VdnkC9tnNa8akXSsTqkh9TM5_rHFb-5g5Vdg71_LTlTZYno28ww/exec"
-          method="POST"
-          target="_self">
+      action="https://script.google.com/macros/s/AKfycbxOCdt1KMDUa0GwAY3VdnkC9tnNa8akXSsTqkh9TM5_rHFb-5g5Vdg71_LTlTZYno28ww/exec"
+      method="POST"
+      target="_self">
 
       <label for="teacherId">Teacher ID</label>
-      <input id="teacherId" name="teacherId" required autocomplete="username">
+      <input id="teacherId" name="teacherId"
+        required autocomplete="username"
+        placeholder="Enter your Teacher ID">
 
       <label for="pin">Attendance PIN</label>
-      <input id="pin" name="pin" type="password" required
-             inputmode="numeric" autocomplete="current-password">
+      <input id="pin" name="pin" type="password"
+        required inputmode="numeric"
+        autocomplete="current-password"
+        placeholder="Enter your Attendance PIN">
 
       <input type="hidden" id="action" name="action" value="">
       <input type="hidden" id="latitude" name="latitude">
@@ -155,26 +253,46 @@
         <video id="video" autoplay playsinline muted></video>
         <canvas id="canvas" hidden></canvas>
         <img id="preview" alt="Captured attendance selfie">
-        <button type="button" class="capture" id="captureButton"
-                onclick="captureSelfie()">Capture Selfie</button>
-        <button type="button" class="capture" id="retakeButton"
-                onclick="retakeSelfie()" hidden>Retake Selfie</button>
+
+        <button type="button" class="capture"
+          id="captureButton" onclick="captureSelfie()">
+          Capture Selfie
+        </button>
+
+        <button type="button" class="capture"
+          id="retakeButton" onclick="retakeSelfie()" hidden>
+          Retake Selfie
+        </button>
       </div>
 
       <button type="button" class="in" id="inButton"
-              onclick="startAttendance('IN')">Punch IN</button>
+        onclick="startAttendance('IN')">
+        Punch IN
+      </button>
+
       <button type="button" class="out" id="outButton"
-              onclick="startAttendance('OUT')">Punch OUT</button>
+        onclick="startAttendance('OUT')">
+        Punch OUT
+      </button>
     </form>
 
     <div id="message" role="status" aria-live="polite">
       Enter your Teacher ID and PIN, then select Punch IN or Punch OUT.
     </div>
 
-    <p class="small">
-      Enable your phone's camera and location permissions.
-      Attendance is accepted only within the permitted school area.
+    <div class="security-note">
+      <span>●</span>
+      <span>
+        Camera and GPS verification are required.
+        Attendance is accepted only within the permitted school area.
+      </span>
+    </div>
+
+    <p class="footer">
+      RAAGASREE E.M HIGH SCHOOL · V. KOTA<br>
+      Staff Attendance Management System · 2026–27
     </p>
+
   </main>
 
   <script>
@@ -224,6 +342,12 @@
 
       try {
         stopCamera();
+
+        if (!navigator.mediaDevices ||
+            !navigator.mediaDevices.getUserMedia) {
+          throw new Error("Camera access is not supported.");
+        }
+
         cameraStream = await navigator.mediaDevices.getUserMedia({
           video: {
             facingMode: "user",
@@ -232,11 +356,14 @@
           },
           audio: false
         });
+
         video.srcObject = cameraStream;
         await video.play();
-        showMessage("Camera ready. Capture your selfie.");
+        showMessage("Camera ready. Please capture your selfie.");
+
       } catch (err) {
         showMessage("Camera could not open. Allow camera permission and try again.");
+        stopCamera();
         inButton.disabled = false;
         outButton.disabled = false;
       }
@@ -288,6 +415,7 @@
             position.coords.longitude;
           document.getElementById("accuracy").value =
             position.coords.accuracy;
+
           submitAttendance();
         },
         error => {
@@ -296,8 +424,12 @@
             2: "Your location could not be determined.",
             3: "Getting your location timed out."
           };
-          showMessage((reasons[error.code] || "GPS failed.") +
-                      " Enable location and retry.");
+
+          showMessage(
+            (reasons[error.code] || "GPS failed.") +
+            " Enable location and retry."
+          );
+
           inButton.disabled = false;
           outButton.disabled = false;
         },
