@@ -281,6 +281,28 @@
 
     .footer-mark { color: var(--gold); font-size: 14px; }
 
+    /* Admin Login link */
+    .admin-login {
+      display: block;
+      width: fit-content;
+      margin: 18px auto 0;
+      padding: 9px 20px;
+      border: 1px solid #e5d6ad;
+      border-radius: 20px;
+      color: var(--navy);
+      background: #fffaf0;
+      font-size: 13px;
+      font-weight: 750;
+      text-decoration: none;
+      text-align: center;
+      transition: background .2s, border-color .2s;
+    }
+
+    .admin-login:hover {
+      background: var(--gold-light);
+      border-color: var(--gold);
+    }
+
     @media (max-width: 380px) {
       body { padding: 14px 9px; }
       .hero { padding: 25px 14px 22px; }
@@ -354,6 +376,11 @@
         <span class="footer-mark">✦</span>
         Allow camera and location access to record attendance securely.
       </p>
+
+      <a class="admin-login"
+         href="https://script.google.com/macros/s/AKfycbxOCdt1KMDUa0GwAY3VdnkC9tnNa8akXSsTqkh9TM5_rHFb-5g5Vdg71_LTlTZYno28ww/exec?page=admin">
+        Admin Login
+      </a>
     </section>
   </main>
 
